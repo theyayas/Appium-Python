@@ -1,0 +1,25 @@
+# Appium-Python
+Contains projects that were made for learning how to operate mobile automation testing using Appium Python
+
+# How to Configure
+1. Install Python at https://www.python.org/downloads/
+2. Install Android Studio at https://developer.android.com/studio
+3. Open android studio, go to more actions > SDK Manager > SDK Tool > check these packages, then click Apply. This will automatically install these packages:
+   - Android SDK Build-Tools 34
+   - Android SDK Command-line Tool (latest)
+   - Android Emulator
+   - Android Emulator hypervisor driver (installer)
+   - Android SDK Platform-Tools
+   - Google USB Tools
+4. In the same menu, go to SDK Platforms tab, check the Android Version Packages you desire, then click Apply. This will also automatically install the packages
+5. Copy the Android SDK Location, then add it to The System Environment Variables in your PC (this is crucial for the Appium Server).
+   To make sure that the Android SDK has been added to the System Environment Variables, open Command Prompt, type "adb", then hit Enter.
+   This will show ADB version, then you're good to go.
+6. Test the connection of your Android Phone with your PC via USB (don't forget to allow USB debugging) by typing "adb devices" in Command Prompt.
+   This will show the list of devices attached, and again you're good to go.
+7. To install the app you can do it using Command Prompt by typing "adb install 'path of the apk in your pc'" (optional).
+8. Install JDK at https://www.oracle.com/id/java/technologies/downloads/
+9. Install Appium at https://github.com/appium/appium-desktop/releases/
+10. Install Appium Inspector https://github.com/appium/appium-inspector/releases
+11. Open Command Prompt the type "pip install appium"
+
