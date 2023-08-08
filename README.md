@@ -39,5 +39,17 @@ Contains projects that were made for learning how to operate mobile automation t
      "appium:deviceName": "*your device name*",
      "appium:udid": "*copied Serial Number*"
    }
-9. 
+
+--- if you have problems while trying to start a session ---
+1. Go to Appium Server GUI -> Advanced
+   Server address: localhost
+   Port: 4723
+   Allow CORP: yes
+2. Go to Appium Inspector
+   Remote host: localhost
+   Port: 4723
+   Path: /wd/hub
+3. Allow Unauthorized Certificates
+4. Select your capabilities
+5. Start server
 
