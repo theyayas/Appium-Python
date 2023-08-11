@@ -101,7 +101,8 @@ def test_login_berhasil():
 def test_simulasi_kredit():
     button_simulasi_kredit = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View/android.view.View[3]/android.view.View[1]/android.view.View/android.widget.Image"
     syncall = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View/android.widget.Button"
-    
+    elemen_terakhir = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View/android.view.View[6]/android.widget.TextView[1]"
+    Index_entry = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View[1]/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.widget.Button"
     #endsync = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View/android.widget.TextView[3]"
     brand = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[3]/android.view.View/android.view.View/android.view.View/android.widget.EditText"
     #TOYOTA - 001
@@ -149,51 +150,37 @@ def test_simulasi_kredit():
         driver.find_element(By.XPATH, button_simulasi_kredit).click()
     except TimeoutException:
         pass
-    
-    #synchronize dulu guys
-    def containsNumber(value):
-        for character in value:
-            if character.isdigit():
-                return True
-        return False
-    
-    def element_contains_number(element):
-        try:
-            text = element.text
-            return any(char.isdigit() for char in text)
-        except Exception:
-            return False
 
+    # Synchronize dulu guyssssss
     try:
         WebDriverWait(driver, 60).until(EC.visibility_of_element_located((By.XPATH, syncall)))
         driver.find_element(By.XPATH, syncall).click()
-        #driver.execute_script('window, ScrollTo')
         driver.swipe(470, 1400, 470, 400, 900)
-        
-        '''try:
-            endsync = driver.find_element(By.XPATH, "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View/android.view.View[6]/android.widget.TextView[1]").text
-            WebDriverWait(driver, 300).until(endsync != 0)
-            driver.back()
-        except TimeoutException:
-            pass'''
-        
-        endsync = driver.find_element(By.XPATH, "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View/android.view.View[6]/android.widget.TextView[1]")
-        WebDriverWait(driver, 300).until(endsync != 0)
+    except TimeoutException:
+        pass
+    
+    # Menunggu Synchronize all lama anjayanto
+    try:
+        WebDriverWait(driver, 180).until(EC.text_to_be_present_in_element((By.XPATH, elemen_terakhir), "180")) # BERHASIL YAHAHAHAHAHAHA (KETAWA JAHAT)
         driver.back()
-
     except TimeoutException:
         pass
 
+    # tunggu button simulasi kredit lagi
+    time.sleep(10)
+    driver.find_element(By.XPATH, button_simulasi_kredit).click()   #klik button simulasi kredit
+
+    # menunggu halaman simulasi kredit dengan menunggu button index entry
     try:
-        WebDriverWait(driver, 60).until(EC.visibility_of_element_located((By.XPATH, button_simulasi_kredit)))
-        #klik button simulasi kredit
-        driver.find_element(By.XPATH, button_simulasi_kredit).click()
+        WebDriverWait(driver, 60).until(EC.visibility_of_element_located((By.XPATH, Index_entry)))
+        pilih_brand = driver.find_element(By.XPATH, brand)
+        pilih_brand.click()
+        Select(pilih_brand).select_by_index
     except TimeoutException:
         pass
 
     #
-    pilih_brand = Select(driver.find_element(By.XPATH, brand))
-    pilih_brand.select_by_visible_text("TOYOTA")
+    
 
     time.sleep(2)
     driver.quit()
