@@ -1,9 +1,11 @@
 from appium import webdriver
+from appium.webdriver.common.touch_action import TouchAction
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import Select
+import pyautogui
 import pytest
 import time
 import warnings
@@ -112,11 +114,12 @@ def test_simulasi_kredit():
     #001 - 1.0 G M/T - 1 TON MB
     tahun = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[6]/android.view.View/android.view.View/android.view.View/android.view.View"
     thn2021 = "/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.ListView/android.widget.CheckedTextView[2]"
-    tenor = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[6]/android.view.View/android.view.View/android.view.View/android.view.View"
+    tenor = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[7]/android.view.View/android.view.View/android.view.View/android.view.View"
     tenor24 = "/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.ListView/android.widget.CheckedTextView[5]"
     dp = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[7]/android.view.View/android.view.View[1]/android.view.View/android.view.View/android.view.View/android.widget.EditText"
     dealer = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[8]/android.view.View/android.view.View/android.view.View/android.widget.EditText"
     #AI ISO-JKT PRAMUKA 01000500008
+    pramuka = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[8]/android.view.View[2]/android.view.View/android.widget.TextView[2]"
     sales = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[9]/android.view.View/android.view.View/android.view.View/android.widget.EditText"
     #A RIZAL R TOWIDJOJO - S0125
     hitung = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[10]/android.widget.Button"
@@ -124,7 +127,7 @@ def test_simulasi_kredit():
 
     #menunggu halaman login
     try:
-        WebDriverWait(driver, 90).until(EC.visibility_of_element_located((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.widget.Image')))
+        WebDriverWait(driver, 180).until(EC.visibility_of_element_located((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.widget.Image')))
         driver.find_element(By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View[2]/android.widget.EditText').click()
     except TimeoutException:
         pass
@@ -161,7 +164,7 @@ def test_simulasi_kredit():
     
     # Menunggu Synchronize all lama anjayanto
     try:
-        WebDriverWait(driver, 180).until(EC.text_to_be_present_in_element((By.XPATH, elemen_terakhir), "180")) # BERHASIL YAHAHAHAHAHAHA (KETAWA JAHAT)
+        WebDriverWait(driver, 300).until(EC.text_to_be_present_in_element((By.XPATH, elemen_terakhir), "180")) # BERHASIL YAHAHAHAHAHAHA (KETAWA JAHAT)
         driver.back()
     except TimeoutException:
         pass
@@ -177,16 +180,77 @@ def test_simulasi_kredit():
     except TimeoutException:
         pass
     
-    #driver.swipe(470, 1400, 470, 800, 900)
+    # Pilih Brand
+    driver.swipe(470, 1400, 470, 800, 900)
     driver.find_element(By.XPATH, brand).click()
-    time.sleep(2)
-    driver.back()
-    driver.find_element(By.XPATH, toyota).click()
-    driver.find_element(By.XPATH, typee).click()
-    driver.find_element(By.XPATH, agya).click()
-    #
-    
+    #time.sleep(1)
+    TouchAction(driver).tap(element = None, x = 566, y = 850).perform() #ini yang bikin susah berhari-hari juga hadeuuhhh
+    time.sleep(1)
 
+    # Pilih Type
+    driver.find_element(By.XPATH, typee).click()
+    time.sleep(2)
+    driver.find_element(By.XPATH, agya).click() # x = 566, y = 800
+    time.sleep(1)
+
+    # Pilih Model
+    driver.find_element(By.XPATH, model).click()
+    time.sleep(2)
+    driver.find_element(By.XPATH, gmt).click() # x = 566, y = 1000
+    time.sleep(1)
+
+    # Pilih Tahun
+    driver.find_element(By.XPATH, tahun).click()
+    time.sleep(1)
+    driver.find_element(By.XPATH, thn2021).click()
+
+    # Pilih Tenor
+    driver.find_element(By.XPATH, tenor).click()
+    time.sleep(1)
+    driver.find_element(By.XPATH, tenor24).click()
+    time.sleep(1)
+
+    # Scroll
+    driver.swipe(470, 1400, 470, 400, 900)
+
+    # Pilih DP
+    driver.find_element(By.XPATH, dp).click()
+    time.sleep(1)
+    #driver.find_element(By.XPATH, dp).send_keys("50")
+    TouchAction(driver).tap(element = None, x = 413, y = 1753).perform() # 5
+    TouchAction(driver).tap(element = None, x = 413, y = 2102).perform() # 0
+    TouchAction(driver).tap(element = None, x = 930, y = 1753).perform() # enter
+    time.sleep(1)
+
+    # Pilih Dealer
+    #driver.find_element(By.XPATH, dealer).click()
+    TouchAction(driver).tap(element = None, x = 930, y = 1753).perform() # enter
+    time.sleep(1)
+    pyautogui.write(r'D:\Bismillahirrohmaanirrohim\Selenium-Python\Data_Dummy.pdf')
+    pyautogui.press('enter')
+    '''driver.find_element(By.XPATH, dealer).send_keys("PRAMUKA")
+    time.sleep(1)
+    driver.find_element(By.XPATH, pramuka).click() # x = 566, y = 1043'''
+    time.sleep(1)
+
+    # Pilih Sales x = 566, y = 1086
+    driver.find_element(By.XPATH, sales).click()
+    time.sleep(1)
+    #driver.swipe(470, 1400, 470, 500, 900)
+    TouchAction(driver).tap(element = None, x = 442, y = 832).perform()
+    time.sleep(1)
+
+    # Hitung yahahahahahahahah
+    driver.find_element(By.XPATH, hitung).click()
+
+    # Apakah berhasil hitung???????????????????????
+    try:
+        WebDriverWait(driver, 60).until(EC.visibility_of_element_located((By.XPATH, berhasil)))
+        assert berhasil is not None
+        print("Berhasil Hitung Simulasi Kredit :)")
+    except TimeoutException:
+        print("Gagal :(")
+    
     time.sleep(5)
     driver.quit()
 
