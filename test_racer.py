@@ -123,7 +123,11 @@ def test_simulasi_kredit():
     sales = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[9]/android.view.View/android.view.View/android.view.View/android.widget.EditText"
     #A RIZAL R TOWIDJOJO - S0125
     hitung = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[10]/android.widget.Button"
-    berhasil = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[1]/android.view.View[2]/android.view.View"
+    #berhasil = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[1]/android.view.View[2]/android.view.View"
+    estimasi_angsuran = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[3]/android.view.View[1]/android.view.View[1]/android.widget.TextView[2]"
+    #16.230.000
+    estimasi_tdp = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[3]/android.view.View[1]/android.view.View[2]/android.widget.TextView[2]"
+    #341.230.000
 
     #menunggu halaman login
     try:
@@ -165,6 +169,7 @@ def test_simulasi_kredit():
     # Menunggu Synchronize all lama anjayanto
     try:
         WebDriverWait(driver, 300).until(EC.text_to_be_present_in_element((By.XPATH, elemen_terakhir), "180")) # BERHASIL YAHAHAHAHAHAHA (KETAWA JAHAT)
+        TouchAction(driver).tap(element = None, x = 488, y = 145).perform() # Menghilangkan pesan synchron
         driver.back()
     except TimeoutException:
         pass
@@ -177,7 +182,6 @@ def test_simulasi_kredit():
     try:
         WebDriverWait(driver, 60).until(EC.visibility_of_element_located((By.XPATH, Index_entry)))
         time.sleep(5)
-        TouchAction(driver).tap(element = None, x = 488, y = 145).perform() # Menghilangkan pesan synchron
     except TimeoutException:
         pass
     
@@ -240,20 +244,19 @@ def test_simulasi_kredit():
     # Pilih Sales x = 566, y = 1086
     driver.find_element(By.XPATH, sales).click()
     time.sleep(1)
-    #driver.swipe(470, 1400, 470, 400, 900)
-    TouchAction(driver).tap(element = None, x = 460, y = 1180).perform()    # Klik salesnya
-    time.sleep(1)
+    driver.swipe(470, 1000, 470, 400, 900)
+    TouchAction(driver).tap(element = None, x = 288, y = 645).perform()    # Klik salesnya
+    time.sleep(3)
 
     # Hitung yahahahahahahahah
     driver.find_element(By.XPATH, hitung).click()
 
     # Apakah berhasil hitung???????????????????????
-    try:
-        WebDriverWait(driver, 60).until(EC.visibility_of_element_located((By.XPATH, berhasil)))
-        assert berhasil is not None
-        print("Berhasil Hitung Simulasi Kredit :)")
-    except TimeoutException:
-        print("Gagal :(")
+    time.sleep(20)
+    text_extimasi_angsuran = driver.find_element(By.XPATH, estimasi_angsuran).text
+    text_estimasi_tdp = driver.find_element(By.XPATH, estimasi_tdp).text
+    assert text_extimasi_angsuran == "16.230.000"
+    assert text_estimasi_tdp == "341.230.000"
     
     time.sleep(5)
     driver.quit()
