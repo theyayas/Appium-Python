@@ -177,13 +177,13 @@ def test_simulasi_kredit():
     try:
         WebDriverWait(driver, 60).until(EC.visibility_of_element_located((By.XPATH, Index_entry)))
         time.sleep(5)
+        TouchAction(driver).tap(element = None, x = 488, y = 145).perform() # Menghilangkan pesan synchron
     except TimeoutException:
         pass
     
     # Pilih Brand
     driver.swipe(470, 1400, 470, 800, 900)
     driver.find_element(By.XPATH, brand).click()
-    #time.sleep(1)
     TouchAction(driver).tap(element = None, x = 566, y = 850).perform() #ini yang bikin susah berhari-hari juga hadeuuhhh
     time.sleep(1)
 
@@ -203,9 +203,11 @@ def test_simulasi_kredit():
     driver.find_element(By.XPATH, tahun).click()
     time.sleep(1)
     driver.find_element(By.XPATH, thn2021).click()
+    time.sleep(1)
 
     # Pilih Tenor
-    driver.find_element(By.XPATH, tenor).click()
+    TouchAction(driver).tap(element = None, x = 250, y = 1450).perform() # 
+    #driver.find_element(By.XPATH, tenor).click()
     time.sleep(1)
     driver.find_element(By.XPATH, tenor24).click()
     time.sleep(1)
@@ -216,28 +218,30 @@ def test_simulasi_kredit():
     # Pilih DP
     driver.find_element(By.XPATH, dp).click()
     time.sleep(1)
-    #driver.find_element(By.XPATH, dp).send_keys("50")
     TouchAction(driver).tap(element = None, x = 413, y = 1753).perform() # 5
     TouchAction(driver).tap(element = None, x = 413, y = 2102).perform() # 0
     TouchAction(driver).tap(element = None, x = 930, y = 1753).perform() # enter
     time.sleep(1)
 
     # Pilih Dealer
-    #driver.find_element(By.XPATH, dealer).click()
     TouchAction(driver).tap(element = None, x = 930, y = 1753).perform() # enter
     time.sleep(1)
-    pyautogui.write(r'D:\Bismillahirrohmaanirrohim\Selenium-Python\Data_Dummy.pdf')
-    pyautogui.press('enter')
-    '''driver.find_element(By.XPATH, dealer).send_keys("PRAMUKA")
-    time.sleep(1)
-    driver.find_element(By.XPATH, pramuka).click() # x = 566, y = 1043'''
+    TouchAction(driver).tap(element = None, x = 1010, y = 1666).perform()   # P
+    TouchAction(driver).tap(element = None, x = 379, y = 1666).perform()    # R
+    TouchAction(driver).tap(element = None, x = 122, y = 1823).perform()    # A
+    TouchAction(driver).tap(element = None, x = 853, y = 1971).perform()    # M
+    TouchAction(driver).tap(element = None, x = 698, y = 1666).perform()    # u
+    TouchAction(driver).tap(element = None, x = 851, y = 1823).perform()    # K
+    TouchAction(driver).tap(element = None, x = 122, y = 1823).perform()    # A
+    time.sleep(2)
+    TouchAction(driver).tap(element = None, x = 460, y = 1170).perform()    # Klik dealernya
     time.sleep(1)
 
     # Pilih Sales x = 566, y = 1086
     driver.find_element(By.XPATH, sales).click()
     time.sleep(1)
-    #driver.swipe(470, 1400, 470, 500, 900)
-    TouchAction(driver).tap(element = None, x = 442, y = 832).perform()
+    #driver.swipe(470, 1400, 470, 400, 900)
+    TouchAction(driver).tap(element = None, x = 460, y = 1180).perform()    # Klik salesnya
     time.sleep(1)
 
     # Hitung yahahahahahahahah
