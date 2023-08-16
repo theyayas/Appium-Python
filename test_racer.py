@@ -252,7 +252,7 @@ def test_simulasi_kredit():
     driver.find_element(By.XPATH, hitung).click()
 
     # Apakah berhasil hitung???????????????????????
-    time.sleep(20)
+    time.sleep(10)
     text_extimasi_angsuran = driver.find_element(By.XPATH, estimasi_angsuran).text
     text_estimasi_tdp = driver.find_element(By.XPATH, estimasi_tdp).text
     assert text_extimasi_angsuran == "16.230.000"
