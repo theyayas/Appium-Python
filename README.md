@@ -55,7 +55,6 @@ Contains projects that were made for learning how to operate mobile automation t
 
 ---------- OR ----------
 Stop the appium server and execute this:
-
-adb uninstall io.appium.uiautomator2.server
-adb uninstall io.appium.uiautomator2.server.test
+   - adb uninstall io.appium.uiautomator2.server
+   - adb uninstall io.appium.uiautomator2.server.test
 
