@@ -4,8 +4,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.support.ui import Select
-import pyautogui
 import pytest
 import time
 import warnings
@@ -53,12 +51,11 @@ def test_login_salah():
         assert error_message is not None
         print("Sesuai, tidak berhasil login")
     except TimeoutException:
-        print("Gagal :(")
-        pass
+        print("Gagal, tidak ada error message")
+        raise Exception("Gagal, tidak ada error message")
 
     time.sleep(2)
     driver.quit()
-
 
 #=========================================================================================================================
 #                                                   LOGIN BERHASIL
@@ -92,25 +89,22 @@ def test_login_berhasil():
 
     try:
         logo_akun = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View[1]/android.view.View[1]/android.widget.Image"
-        WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, logo_akun)))
+        WebDriverWait(driver, 60).until(EC.visibility_of_element_located((By.XPATH, logo_akun)))
         assert logo_akun is not None
-        print("Sesuai, berhasil login")
+        print("Berhasil Login")
     except TimeoutException:
-        print("Gagal :(")
-        pass
+        print("Gagal Login")
+        raise Exception("Gagal Login")
 
     time.sleep(2)
-    driver.quit()
+    #driver.quit()
 
 #=========================================================================================================================
-#                                                   SIMULASI KREDIT
+#                                                  SIMULASI KREDIT
 #=========================================================================================================================
 
 @pytest.mark.simulasiKredit
 def test_simulasi_kredit():
-    username = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View[2]/android.widget.EditText"
-    password = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[3]/android.view.View/android.view.View/android.view.View[2]/android.widget.EditText"
-    login = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.Button"
     button_simulasi_kredit = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View/android.view.View[3]/android.view.View[1]/android.view.View/android.widget.Image"
     syncall = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View/android.widget.Button"
     elemen_terakhir = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View/android.view.View[6]/android.widget.TextView[1]"
@@ -139,29 +133,7 @@ def test_simulasi_kredit():
     estimasi_tdp = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[3]/android.view.View[1]/android.view.View[2]/android.widget.TextView[2]"
     #341.230.000
 
-    #menunggu halaman login
-    try:
-        WebDriverWait(driver, 180).until(EC.visibility_of_element_located((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.widget.Image')))
-        driver.find_element(By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View[2]/android.widget.EditText').click()
-    except TimeoutException:
-        pass
-
-    #input data pada halaman login
-    driver.find_element(By.XPATH, username).click()
-    time.sleep(1)
-    driver.back()
-    driver.find_element(By.XPATH, username).send_keys("KLG.W08094")
-    driver.find_element(By.XPATH, password).send_keys("Password1")
-    driver.find_element(By.XPATH, login).click()
-
-    #location permition
-    try:
-        location1 = "/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.ScrollView/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.LinearLayout[1]/android.widget.LinearLayout/android.widget.ImageView"
-        location = "/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.ScrollView/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.LinearLayout[3]/android.widget.Button[1]"
-        WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.XPATH, location1)))
-        driver.find_element(By.XPATH, location).click()
-    except TimeoutException:
-        pass
+    test_login_berhasil()
 
     #apakah berhasi login? YAHAHAHAHAHAHHA
     try:
@@ -267,15 +239,122 @@ def test_simulasi_kredit():
     driver.find_element(By.XPATH, hitung).click()
 
     # Apakah berhasil hitung???????????????????????
-    time.sleep(10)
-    text_extimasi_angsuran = driver.find_element(By.XPATH, estimasi_angsuran).text
-    text_estimasi_tdp = driver.find_element(By.XPATH, estimasi_tdp).text
-    assert text_extimasi_angsuran == "16.230.000"
-    assert text_estimasi_tdp == "341.230.000"
+    try:
+        WebDriverWait(driver, 10).until(EC.text_to_be_present_in_element((By.XPATH, estimasi_angsuran), "16.230.000"))
+        WebDriverWait(driver, 10).until(EC.text_to_be_present_in_element((By.XPATH, estimasi_tdp), "341.230.000"))
+        print("Berhasil Simulasi Kredit")
+    except TimeoutException:
+        print("Gagal Simulasi Kredit")
+        raise Exception("gagal Simulasi Kredit")
+    
     
     time.sleep(5)
-    driver.quit()
+    #driver.quit()
 
+#=========================================================================================================================
+#                                                     ASURANSI
+#=========================================================================================================================
 
+@pytest.mark.Asuransi
+def test_asuransi():
+    global berikutnya
+    berikutnya = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[3]/android.view.View[1]/android.view.View[3]/android.widget.Button'
+    nama_asuransi = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View[3]/android.view.View/android.view.View/android.view.View/android.widget.EditText'
+    ojk2017 = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View[4]/android.view.View/android.view.View/android.widget.TextView[2]'
+    kode_wilayah = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View[4]/android.view.View/android.view.View/android.view.View/android.view.View'
+    #wait
+    banten = '/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.ListView/android.widget.CheckedTextView[2]'
+    ar = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View[6]/android.view.View[2]/android.view.View[1]/android.view.View[1]/android.widget.TextView'
+    credit = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View[6]/android.view.View[3]/android.view.View[2]/android.view.View[2]/android.widget.TextView'
+    #scroll
+    hitung = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View[10]/android.widget.Button'
+    berikutnya2 = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[3]/android.view.View/android.view.View[3]'
+    estimasi_angsuran = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[3]/android.view.View[1]/android.view.View[1]/android.widget.TextView[2]"
+    #17.470.000
+    estimasi_tdp = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[3]/android.view.View[1]/android.view.View[2]/android.widget.TextView[2]"
+    #342.520.000
 
+    test_simulasi_kredit()
 
+    driver.find_element(By.XPATH, berikutnya).click()
+    time.sleep(3)
+
+    #pilih asuransi OJK
+    driver.find_element(By.XPATH, nama_asuransi).click()
+    driver.find_element(By.XPATH, nama_asuransi).send_keys('OJK')
+    time.sleep(2)
+    TouchAction(driver).tap(element = None, x = 500, y = 1090).perform()
+    time.sleep(2)
+    #driver.find_element(By.XPATH, ojk2017).click()
+
+    #pilih kode wilayah Banten, DKI, Jabar
+    driver.find_element(By.XPATH, kode_wilayah).click()
+    time.sleep(2)
+    driver.find_element(By.XPATH, banten).click() # 500, 1180
+
+    #pembayaran asuransi
+    driver.find_element(By.XPATH, ar).click()
+    driver.find_element(By.XPATH, ar).click()
+    driver.find_element(By.XPATH, credit).click()
+    driver.find_element(By.XPATH, credit).click()
+
+    #hitung
+    driver.swipe(500, 1400, 500, 400, 100)
+    driver.find_element(By.XPATH, hitung).click()
+    
+    #berhasil hitung?????
+    try:
+        WebDriverWait(driver, 10).until(EC.text_to_be_present_in_element((By.XPATH, estimasi_angsuran), "17.470.000"))
+        WebDriverWait(driver, 10).until(EC.text_to_be_present_in_element((By.XPATH, estimasi_tdp), "342.520.000"))
+        print("Berhasil Hitung Asuransi")
+    except TimeoutException:
+        print("Gagal Hitung Asuransi")
+        raise Exception("gagal Hitung Asuransi")
+
+#=========================================================================================================================
+#                                                     LOAN DETAIL
+#=========================================================================================================================
+
+@pytest.mark.loanDetail
+def test_loan_detail():
+    title = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[1]/android.view.View[2]/android.view.View/android.widget.TextView'
+    titlee = driver.find_element(By.XPATH, title).text
+    
+    # Kategori Loan - berikutnya
+    #Loan Detail
+    subsidirate = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View[2]/android.widget.TextView'
+    #770 450
+    hitung = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View[7]/android.view.View[5]/android.widget.Button'
+    # 540 1700
+    estimasi_angsuran = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[3]/android.view.View[1]/android.view.View[1]/android.widget.TextView[2]"
+    #17.470.000
+    estimasi_tdp = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[3]/android.view.View[1]/android.view.View[2]/android.widget.TextView[2]"
+    #344.120.000
+    #berikutnya
+    # Summary Loan Detail - berikutnya
+
+    test_asuransi()
+
+    # Kategori Loan
+    driver.find_element(By.XPATH, berikutnya).click()
+    assert driver.find_element(By.XPATH, title).text == "Kategori Loan"
+    print("Berhasil masuk ke Kategori Loan")
+
+    # Loan Detail
+    driver.find_element(By.XPATH, berikutnya).click()
+    assert driver.find_element(By.XPATH, title).text == "Loan Detail"
+    driver.find_element(By.XPATH, subsidirate).click()
+    driver.swipe(500, 1400, 500, 400, 100)
+    driver.find_element(By.XPATH, hitung).click()
+    try:
+        WebDriverWait(driver, 10).until(EC.text_to_be_present_in_element((By.XPATH, estimasi_angsuran), "17.470.000"))
+        WebDriverWait(driver, 10).until(EC.text_to_be_present_in_element((By.XPATH, estimasi_tdp), "344.120.000"))
+        print("Berhasil Hitung Loan Detail")
+    except TimeoutException:
+        print("Gagal Hitung Loan Detail")
+        raise Exception("Gagal Hitung Loan Detail")
+    
+    # Summary Loan Detail
+    driver.find_element(By.XPATH, berikutnya).click()
+    assert driver.find_element(By.XPATH, title).text == "Summary Loan Detail"
+    print("Berhasil masuk ke Summary Loan Detail")
