@@ -41,19 +41,21 @@ Contains projects that were made for learning how to operate mobile automation t
    }
 
 --- if you have problems while trying to start a session ---
-1. Go to Appium Server GUI -> Advanced
-   Server address: localhost
-   Port: 4723
-   Allow CORP: yes
-2. Go to Appium Inspector
-   Remote host: localhost
-   Port: 4723
-   Path: /wd/hub
-3. Allow Unauthorized Certificates
-4. Select your capabilities
-5. Start server
+1. Go to Appium Server GUI -> Advanced, then set:
+   - Server address: localhost
+   - Port: 4723
+   - Allow CORP: yes
+2. Start Appium Server
+3. Go to Appium Inspector, then set:
+   - Remote host: localhost
+   - Port: 4723
+   - Path: /wd/hub
+   - Allow Unauthorized Certificates
+   - Select your capabilities
+4. Start Appium Inspector Server
+   
+or
 
---- or ---
 Stop the appium server and execute this:
    - adb uninstall io.appium.uiautomator2.server
    - adb uninstall io.appium.uiautomator2.server.test
