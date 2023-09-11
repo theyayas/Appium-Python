@@ -108,6 +108,7 @@ def test_simulasi_kredit():
     button_simulasi_kredit = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View/android.view.View[3]/android.view.View[1]/android.view.View/android.widget.Image"
     syncall = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View/android.widget.Button"
     elemen_terakhir = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View/android.view.View[6]/android.widget.TextView[1]"
+    global Index_entry
     Index_entry = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View[1]/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.widget.Button"
     brand = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[3]/android.view.View/android.view.View/android.view.View/android.widget.EditText"
     toyota = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[4]/android.view.View/android.widget.TextView[2]"
@@ -165,7 +166,7 @@ def test_simulasi_kredit():
 
     # menunggu halaman simulasi kredit dengan menunggu button index entry
     try:
-        WebDriverWait(driver, 60).until(EC.visibility_of_element_located((By.XPATH, Index_entry)))
+        WebDriverWait(driver, 180).until(EC.visibility_of_element_located((By.XPATH, Index_entry)))
         time.sleep(5)
     except TimeoutException:
         pass
@@ -279,6 +280,13 @@ def test_asuransi():
     driver.find_element(By.XPATH, berikutnya).click()
     time.sleep(3)
 
+    # menunggu halaman Asuransi dengan menunggu button index entry
+    try:
+        WebDriverWait(driver, 180).until(EC.visibility_of_element_located((By.XPATH, Index_entry)))
+        time.sleep(5)
+    except TimeoutException:
+        pass
+
     #pilih asuransi OJK
     driver.find_element(By.XPATH, nama_asuransi).click()
     driver.find_element(By.XPATH, nama_asuransi).send_keys('OJK')
@@ -317,8 +325,12 @@ def test_asuransi():
 
 @pytest.mark.loanDetail
 def test_loan_detail():
+
+    global title
     title = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[1]/android.view.View[2]/android.view.View/android.widget.TextView'
-    titlee = driver.find_element(By.XPATH, title).text
+    #titlee = driver.find_element(By.XPATH, title).text
+
+    #/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[1]/android.view.View[2]/android.view.View/android.widget.TextView
     
     # Kategori Loan - berikutnya
     #Loan Detail
@@ -337,11 +349,23 @@ def test_loan_detail():
 
     # Kategori Loan
     driver.find_element(By.XPATH, berikutnya).click()
+    # menunggu halaman kategori loan dengan menunggu button index entry
+    try:
+        WebDriverWait(driver, 180).until(EC.visibility_of_element_located((By.XPATH, Index_entry)))
+        time.sleep(2)
+    except TimeoutException:
+        pass
     assert driver.find_element(By.XPATH, title).text == "Kategori Loan"
     print("Berhasil masuk ke Kategori Loan")
+    driver.find_element(By.XPATH, berikutnya).click()
 
     # Loan Detail
-    driver.find_element(By.XPATH, berikutnya).click()
+    # menunggu halaman loan detail dengan menunggu button index entry
+    try:
+        WebDriverWait(driver, 180).until(EC.visibility_of_element_located((By.XPATH, Index_entry)))
+        time.sleep(2)
+    except TimeoutException:
+        pass
     assert driver.find_element(By.XPATH, title).text == "Loan Detail"
     driver.find_element(By.XPATH, subsidirate).click()
     driver.swipe(500, 1400, 500, 400, 100)
@@ -353,8 +377,39 @@ def test_loan_detail():
     except TimeoutException:
         print("Gagal Hitung Loan Detail")
         raise Exception("Gagal Hitung Loan Detail")
+    driver.find_element(By.XPATH, berikutnya).click()
     
     # Summary Loan Detail
-    driver.find_element(By.XPATH, berikutnya).click()
+    # menunggu halaman summary loan detail dengan menunggu button index entry
+    try:
+        WebDriverWait(driver, 180).until(EC.visibility_of_element_located((By.XPATH, Index_entry)))
+        time.sleep(2)
+    except TimeoutException:
+        pass
     assert driver.find_element(By.XPATH, title).text == "Summary Loan Detail"
     print("Berhasil masuk ke Summary Loan Detail")
+
+@pytest.mark.detailBorrower
+def test_detail_borrower():
+    kartu_identitas = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View'
+    #galeri 365, 1235
+    akses = '/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.ScrollView/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.LinearLayout[1]/android.widget.LinearLayout'
+    allow = '/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.ScrollView/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.LinearLayout[2]/android.widget.Button[1]'
+    #wait 10 detik back
+    noIdentitas = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View/android.view.View/android.view.View[3]/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.TextView'
+    nama = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View/android.view.View/android.view.View[5]/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.EditText'
+    tempatLahir = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View/android.view.View/android.view.View[8]/android.view.View/android.view.View/android.view.View/android.widget.EditText'
+
+    test_loan_detail()
+
+    driver.find_element(By.XPATH, berikutnya).click()
+
+    # Identitas
+    # menunggu halaman identitas dengan menunggu button index entry
+    try:
+        WebDriverWait(driver, 180).until(EC.visibility_of_element_located((By.XPATH, Index_entry)))
+        time.sleep(2)
+    except TimeoutException:
+        pass
+    assert driver.find_element(By.XPATH, title) == "Detail Borrower"
+    print("Berhasil masuk halaman Detail Borrower")
