@@ -37,7 +37,10 @@ Contains projects that were made for learning how to operate mobile automation t
      "appium:appActivity": "*copied App Activity*",
      "appium:platformName": "Android",
      "appium:deviceName": "*your device name*",
-     "appium:udid": "*copied Serial Number*"
+     "appium:udid": "*copied Serial Number*",
+     "appium:noReset": true,
+     "appium:autoGrantPermissions": true,
+     "appium:forceAppLaunch": true
    }
 
 --- if you have problems while trying to start a session ---
