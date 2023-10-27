@@ -1,8 +1,7 @@
-def containsNumber(value):
-    for character in value:
-        if character.isdigit():
-            return True
-    return False
+import csv
 
-print(containsNumber("yahaha"))
-print(containsNumber("yahah4"))
+with open('email-password-recovery-code.csv') as fileKita:
+    reader = csv.reader(fileKita, delimiter = ';')  #csv.DictReader = membuat baris pertama pada file menjadi keyword setiap data (nama, alamat, dsb)
+    for baris in reader:
+        #print(baris)
+        print(baris[5])

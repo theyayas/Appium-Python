@@ -6,6 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
 import pytest
 import time
+import csv
 
 desire_caps = {}
 
@@ -128,7 +129,6 @@ def test_follow_orang():
 
     driver.close_app()
 
-
 @pytest.mark.sendAttachFile
 def test_send_attach():
     driver.implicitly_wait(10)
@@ -169,10 +169,9 @@ def test_send_attach():
 
     driver.close_app()
 
-
 @pytest.mark.addStory
 def test_add_story():
-    driver.implicitly_wait(10)
+    driver.implicitly_wait(20)
 
     buttonLihat = '//androidx.recyclerview.widget.RecyclerView[@content-desc="reels_tray_container"]/android.widget.LinearLayout[1]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View' #XPATH
     buttonPlus = 'com.instagram.android:id/reel_viewer_profile_picture' #ID
@@ -192,9 +191,9 @@ def test_add_story():
 
     driver.swipe(800, 1800, 530, 600, 500)  # 800, 1800
     driver.swipe(530, 600, 200, 1800, 500)  # 530, 600
-    driver.swipe(200, 1800, 800, 750, 500)  # 200, 1800
-    driver.swipe(800, 750, 200, 750, 500)   # 800, 750
-    driver.swipe(200, 750, 800, 1800, 500)  # 200, 750
+    driver.swipe(200, 1800, 800, 1000, 500) # 200, 1800
+    driver.swipe(800, 1000, 200, 1000, 500) # 800, 750
+    driver.swipe(200, 1000, 800, 1800, 500) # 200, 750
 
     driver.find_element(By.ID, buttonDone).click()
     driver.find_element(By.XPATH, buttonCloseFriend).click()
@@ -206,6 +205,91 @@ def test_add_story():
         pass
 
     driver.close_app()
+
+@pytest.mark.sendAPost
+def test_send_a_post():
+    driver.implicitly_wait(10)
+
+    searchTab = 'com.instagram.android:id/search_tab' #id
+    postEmpat = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.widget.FrameLayout[1]/android.widget.FrameLayout/android.widget.FrameLayout/androidx.recyclerview.widget.RecyclerView/android.widget.FrameLayout[4]' #xpath
+    share = 'com.instagram.android:id/row_feed_button_share' #id
+    editText = 'com.instagram.android:id/search_edit_text' #id
+    akun = '//android.widget.TextView[@content-desc="Dav"]' #xpath
+    writeMessage = 'com.instagram.android:id/direct_private_share_message_box' #id
+    buttonSend = 'com.instagram.android:id/direct_send_button_multi_select' #id
+    homeTab = 'com.instagram.android:id/feed_tab' #id
+    buttonDm = 'com.instagram.android:id/action_bar_inbox_button' #id
+    pesanterkirim = '//android.widget.TextView[@content-desc="coba liat ini lucu deh awokawokawokaoakw !!!"]' #xpath
+
+    driver.find_element(By.ID, searchTab).click()
+    driver.find_element(By.XPATH, postEmpat).click()
+    driver.find_element(By.ID, share).click()
+    driver.find_element(By.ID, editText).send_keys("dav")
+    driver.find_element(By.XPATH, akun).click()
+    driver.find_element(By.ID, writeMessage).send_keys("coba liat ini lucu deh awokawokawokaoakw !!!")
+    driver.find_element(By.ID, buttonSend).click()
+    driver.find_element(By.ID, homeTab).click()
+    driver.find_element(By.ID, buttonDm).click()
+
+    if driver.find_element(By.XPATH, akun).text == "Dav":
+        driver.find_element(By.XPATH, akun).click()
+    else:
+        raise Exception("Akun tidak ditemukan !!!")
+    
+    assert driver.find_element(By.XPATH, pesanterkirim).text == "coba liat ini lucu deh awokawokawokaoakw !!!"
+    time.sleep(2)
+    driver.close_app()
+
+@pytest.mark.ngespam
+def test_data_binding():
+    driver.implicitly_wait(10)
+
+    buttonDm = 'com.instagram.android:id/action_bar_inbox_button' #ID
+    searchbar = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.widget.FrameLayout/android.widget.FrameLayout[2]/android.widget.FrameLayout/androidx.recyclerview.widget.RecyclerView/android.widget.LinearLayout[1]/android.view.ViewGroup/android.widget.FrameLayout/android.widget.TextView' #XPATH
+    searchbar2 = 'com.instagram.android:id/search_bar_real_field'
+    akun = '//android.widget.TextView[@content-desc="Maul"]' #XPATH
+    editMessage = 'com.instagram.android:id/row_thread_composer_edittext' #ID
+    buttonSend = 'com.instagram.android:id/row_thread_composer_button_send' #ID
+    buttonRecord = 'com.instagram.android:id/row_thread_composer_voice' #id
+    iconMengirim = 'com.instagram.android:id/action_icon' #ID
+
+    driver.find_element(By.ID, buttonDm).click()
+    driver.find_element(By.XPATH, searchbar).click()
+    driver.find_element(By.ID, searchbar2).send_keys("maul")
+
+    if driver.find_element(By.XPATH, akun).text == "Maul":
+        driver.find_element(By.XPATH, akun).click()
+    else:
+        raise Exception("Akun tidak ditemukan !!!")    
+
+    with open('email-password-recovery-code.csv') as fileKita:
+        reader = csv.reader(fileKita, delimiter = ',')  #csv.DictReader = membuat baris pertama pada file menjadi keyword setiap data (nama, alamat, dsb)
+        for baris in reader:
+            driver.find_element(By.ID, editMessage).send_keys("Nama : ", baris[4], " ", baris[5], "\n", 
+                                                              "ID : ", baris[1], "\n",
+                                                              "Departemen : ", baris[6], "\n",
+                                                              "Email : ", baris[0], "\n",
+                                                              "One-time Password : ", baris[2], "\n",
+                                                              "Recovery Code : ", baris[3], "\n",
+                                                              "Lokasi : ", baris[7])
+            '''driver.find_element(By.ID, editMessage).send_keys("ID : ", baris[1])
+            driver.find_element(By.ID, editMessage).send_keys("Departemen : ", baris[6])
+            driver.find_element(By.ID, editMessage).send_keys("Email : ", baris[0])
+            driver.find_element(By.ID, editMessage).send_keys("One-time Password : ", baris[2])
+            driver.find_element(By.ID, editMessage).send_keys("Recovery Code : ", baris[3])
+            driver.find_element(By.ID, editMessage).send_keys("Lokasi : ", baris[7])'''
+            driver.find_element(By.ID, buttonSend).click()
+    
+    TouchAction(driver).long_press(driver.find_element(By.ID, buttonRecord), duration = 5000).release().perform()
+    
+    time.sleep(5)
+    driver.close_app()
+
+
+
+
+    
+
 
     
 
