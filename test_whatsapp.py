@@ -79,3 +79,36 @@ def test_spanm():
     
     time.sleep(3)
     driver.close_app()
+
+@pytest.mark.fotoHD
+def test_foto_HD():
+    driver.implicitly_wait(10)
+
+    buttonSearch = 'com.whatsapp:id/menuitem_search' #id
+    searchInput = 'com.whatsapp:id/search_input' #id
+    akun = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout/androidx.recyclerview.widget.RecyclerView/android.widget.RelativeLayout[1]/android.widget.LinearLayout/android.widget.LinearLayout[1]/android.widget.FrameLayout/android.widget.TextView' #xpath
+    buttonKamera = 'com.whatsapp:id/camera_btn' #id
+    buttonShutter = 'com.whatsapp:id/shutter' #id
+    buttonHD = 'com.whatsapp:id/media_upload_quality_settings' #id
+    high = 'com.whatsapp:id/media_quality_hd' #id
+    caption = 'com.whatsapp:id/caption' #id
+    buttonSend = 'com.whatsapp:id/send' #id
+
+
+    driver.find_element(By.ID, buttonSearch).click()
+    driver.find_element(By.ID, searchInput).send_keys("didik")
+
+    if "Didik" in driver.find_element(By.XPATH, akun).text:
+        driver.find_element(By.XPATH, akun).click()
+    else:
+        raise Exception("Akun tidak ditemukan !!!")
+    
+    driver.find_element(By.ID, buttonKamera).click()
+    driver.find_element(By.ID, buttonShutter).click()
+    driver.find_element(By.ID, buttonHD).click()
+    driver.find_element(By.ID, high).click()
+    driver.find_element(By.ID, caption).send_keys("Makan tuh foto HD !!!")
+    driver.find_element(By.ID, buttonSend).click()
+
+    time.sleep(10)
+    driver.close_app()
