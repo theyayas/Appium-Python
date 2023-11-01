@@ -13,8 +13,7 @@ desire_caps = {}
 desire_caps['appPackage'] = "com.whatsapp"
 desire_caps['appActivity'] = "com.whatsapp.HomeActivity"
 desire_caps['platformName'] = "Android"
-desire_caps['deviceName'] = "ayas' phone"
-desire_caps['udid'] = "RR8R7027AZH"
+desire_caps['udid'] =  "RR8R7027AZH" #"emulator-5554"
 desire_caps['noReset'] = True
 desire_caps['autoGrantpermissions'] = True
 desire_caps['forceAppLaunch'] = True
@@ -89,6 +88,7 @@ def test_foto_HD():
     akun = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout/androidx.recyclerview.widget.RecyclerView/android.widget.RelativeLayout[1]/android.widget.LinearLayout/android.widget.LinearLayout[1]/android.widget.FrameLayout/android.widget.TextView' #xpath
     buttonKamera = 'com.whatsapp:id/camera_btn' #id
     buttonShutter = 'com.whatsapp:id/shutter' #id
+    gambar4 = '(//android.widget.ImageView[@content-desc="Photo"])[3]' #xpath
     buttonHD = 'com.whatsapp:id/media_upload_quality_settings' #id
     high = 'com.whatsapp:id/media_quality_hd' #id
     caption = 'com.whatsapp:id/caption' #id
@@ -96,18 +96,22 @@ def test_foto_HD():
 
 
     driver.find_element(By.ID, buttonSearch).click()
-    driver.find_element(By.ID, searchInput).send_keys("didik")
+    driver.find_element(By.ID, searchInput).send_keys("me")
 
-    if "Didik" in driver.find_element(By.XPATH, akun).text:
+    if "Me" in driver.find_element(By.XPATH, akun).text:
         driver.find_element(By.XPATH, akun).click()
     else:
         raise Exception("Akun tidak ditemukan !!!")
     
     driver.find_element(By.ID, buttonKamera).click()
-    driver.find_element(By.ID, buttonShutter).click()
+    driver.find_element(By.XPATH, gambar4).click()
     driver.find_element(By.ID, buttonHD).click()
     driver.find_element(By.ID, high).click()
+    #
+    driver.find_element(By.ID, caption).click()
     driver.find_element(By.ID, caption).send_keys("Makan tuh foto HD !!!")
+    
+    time.sleep(2)
     driver.find_element(By.ID, buttonSend).click()
 
     time.sleep(10)
