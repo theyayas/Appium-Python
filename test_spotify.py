@@ -81,5 +81,15 @@ def test_cari_lagu():
     time.sleep(60)
     #driver.close_app()
 
+@pytest.mark.tesAja
+def tes_aja():
+    driver.implicitly_wait(10)
+
+    iklanAwal = 'com.spotify.music:id/iam_webview' #id
+    searchTab = 'com.spotify.music:id/search_tab' #id
+    tombolInput = 'com.spotify.music:id/find_search_field_text' #id
+    searchInput = 'com.spotify.music:id/query' #id
+
+
 
 

@@ -1,5 +1,6 @@
 from appium import webdriver
 from appium.webdriver.common.touch_action import TouchAction
+from appium.webdriver.common.multi_action import MultiAction
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
@@ -13,7 +14,7 @@ desire_caps = {}
 desire_caps['appPackage'] = "com.whatsapp"
 desire_caps['appActivity'] = "com.whatsapp.HomeActivity"
 desire_caps['platformName'] = "Android"
-desire_caps['udid'] =  "RR8R7027AZH" #"emulator-5554"
+desire_caps['udid'] =  "emulator-5554" # RR8R7027AZH, emulator-5554
 desire_caps['noReset'] = True
 desire_caps['autoGrantpermissions'] = True
 desire_caps['forceAppLaunch'] = True
@@ -116,3 +117,65 @@ def test_foto_HD():
 
     time.sleep(10)
     driver.close_app()
+
+@pytest.mark.rekamSuara
+def test_rekam_suara():
+    driver.implicitly_wait(10)
+
+    buttonSearch = 'com.whatsapp:id/menuitem_search' #id
+    searchInput = 'com.whatsapp:id/search_input' #id
+    akun = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout/androidx.recyclerview.widget.RecyclerView/android.widget.RelativeLayout[1]/android.widget.LinearLayout/android.widget.LinearLayout[1]/android.widget.FrameLayout/android.widget.TextView' #xpath
+    buttonRekam = 'com.whatsapp:id/voice_note_btn' #id
+
+    driver.find_element(By.ID, buttonSearch).click()
+    driver.find_element(By.ID, searchInput).send_keys("me")
+
+    if "Me" in driver.find_element(By.XPATH, akun).text:
+        driver.find_element(By.XPATH, akun).click()
+    else:
+        raise Exception("Akun tidak ditemukan !!!")
+    
+    driver.find_element(By.ID, buttonRekam).click()
+    TouchAction(driver).long_press(driver.find_element(By.ID, buttonRekam), duration = 5000).release().perform()
+
+@pytest.mark.zoomFoto
+def test_foto_HD():
+    driver.implicitly_wait(10)
+
+    buttonSearch = 'com.whatsapp:id/menuitem_search' #id
+    searchInput = 'com.whatsapp:id/search_input' #id
+    akun = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout/androidx.recyclerview.widget.RecyclerView/android.widget.RelativeLayout[1]/android.widget.LinearLayout/android.widget.LinearLayout[1]/android.widget.FrameLayout/android.widget.TextView' #xpath
+    buttonKamera = 'com.whatsapp:id/camera_btn' #id
+    buttonShutter = 'com.whatsapp:id/shutter' #id
+    gambar3 = '(//android.widget.ImageView[@content-desc="Photo"])[3]' #xpath
+    buttonHD = 'com.whatsapp:id/media_upload_quality_settings' #id
+    high = 'com.whatsapp:id/media_quality_hd' #id
+    caption = 'com.whatsapp:id/caption' #id
+    buttonSend = 'com.whatsapp:id/send' #id
+
+
+    driver.find_element(By.ID, buttonSearch).click()
+    driver.find_element(By.ID, searchInput).send_keys("me")
+
+    if "Me" in driver.find_element(By.XPATH, akun).text:
+        driver.find_element(By.XPATH, akun).click()
+    else:
+        raise Exception("Akun tidak ditemukan !!!")
+    
+    driver.find_element(By.ID, buttonKamera).click()
+    driver.find_element(By.XPATH, gambar3).click()
+    time.sleep(3)
+
+    # Penggunaan MultiAction untuk melakukan zoom in
+    a1 = TouchAction(driver).long_press(None, 715, 1100).move_to(None, 715, 800).wait(1000).release()
+    a2 = TouchAction(driver).long_press(None, 715, 1600).move_to(None, 715, 1900).wait(1000).release()
+
+    #MultiAction(driver).add(touch1, touch2).
+    #MultiAction(driver).add(touch1.perform(), touch2.release())
+
+    zoom = MultiAction(driver)
+    zoom.add(a1)
+    zoom.add(a2)
+    zoom.perform()
+
+    driver.find_element(By.ID, buttonSend).click()

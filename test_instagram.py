@@ -1,9 +1,11 @@
 from appium import webdriver
 from appium.webdriver.common.touch_action import TouchAction
+from appium.webdriver.common.multi_action import MultiAction
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
+
 import pytest
 import time
 import csv
@@ -13,7 +15,6 @@ desire_caps = {}
 desire_caps['appPackage'] = "com.instagram.android"
 desire_caps['appActivity'] = "com.instagram.mainactivity.InstagramMainActivity"
 desire_caps['platformName'] = "Android"
-desire_caps['deviceName'] = "ayas' phone"
 desire_caps['udid'] = "emulator-5554"
 desire_caps['noReset'] = True
 desire_caps['autoGrantpermissions'] = True
@@ -291,9 +292,98 @@ def test_data_binding():
     driver.close_app()
 
 
+@pytest.mark.kirimDMVideo
+def test_kirim_dm_video():
+    driver.implicitly_wait(10)
 
+    buttonDm = 'com.instagram.android:id/action_bar_inbox_button' #ID
+    searchbar = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.widget.FrameLayout/android.widget.FrameLayout[2]/android.widget.FrameLayout/androidx.recyclerview.widget.RecyclerView/android.widget.LinearLayout[1]/android.view.ViewGroup/android.widget.FrameLayout/android.widget.TextView' #XPATH
+    searchbar2 = 'com.instagram.android:id/search_bar_real_field'
+    akun = '//android.widget.TextView[@content-desc="Maul"]' #XPATH
+    buttonCamera = 'com.instagram.android:id/row_thread_composer_button_camera' #id
+    # swipe 400,2500 -> 715,2500
+    shutter = 'com.instagram.android:id/camera_shutter_button_inner_container' #id
+    buttonSendDirect = 'com.instagram.android:id/direct_reply_avatar_button_toggle_container' #id
+    iconMengirim = 'com.instagram.android:id/action_icon' #ID
 
+    driver.find_element(By.ID, buttonDm).click()
+    driver.find_element(By.XPATH, searchbar).click()
+    driver.find_element(By.ID, searchbar2).send_keys("maul")
+
+    if driver.find_element(By.XPATH, akun).text == "Maul":
+        driver.find_element(By.XPATH, akun).click()
+    else:
+        raise Exception("Akun tidak ditemukan !!!")
+
+    driver.find_element(By.ID, buttonCamera).click()
+    time.sleep(3)
+    driver.swipe(400, 2500, 715, 2500, 500) 
+    TouchAction(driver).long_press(driver.find_element(By.ID, shutter), duration = 5000).release().perform()
+    driver.find_element(By.ID, buttonSendDirect).click()
     
+    try:
+        WebDriverWait(driver, 60).until(EC.invisibility_of_element_located((By.ID, iconMengirim)))
+        time.sleep(3)
+        driver.close_app()
+    except TimeoutException:
+        raise Exception("video tidak terkirim :(")
+    
+@pytest.mark.zoomFoto
+def test_zoom_foto():
+    driver.implicitly_wait(10)
+
+    buttonDm = 'com.instagram.android:id/action_bar_inbox_button' #ID
+    searchbar = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.widget.FrameLayout/android.widget.FrameLayout[2]/android.widget.FrameLayout/androidx.recyclerview.widget.RecyclerView/android.widget.LinearLayout[1]/android.view.ViewGroup/android.widget.FrameLayout/android.widget.TextView' #XPATH
+    searchbar2 = 'com.instagram.android:id/search_bar_real_field'
+    akun = '//android.widget.TextView[@content-desc="Maul"]' #XPATH
+    buttonCamera = 'com.instagram.android:id/row_thread_composer_button_camera' #id
+    gambar1 = '(//android.view.View[@content-desc="Photo thumbnail"])[2]' #xpath\
+    buttonSendDirect = 'com.instagram.android:id/direct_reply_avatar_button_toggle_container' #id
+    iconMengirim = 'com.instagram.android:id/action_icon' #ID
+    
+    driver.find_element(By.ID, buttonDm).click()
+    driver.find_element(By.XPATH, searchbar).click()
+    driver.find_element(By.ID, searchbar2).send_keys("maul")
+
+    if driver.find_element(By.XPATH, akun).text == "Maul":
+        driver.find_element(By.XPATH, akun).click()
+    else:
+        raise Exception("Akun tidak ditemukan !!!")
+
+    driver.find_element(By.ID, buttonCamera).click()
+    time.sleep(3)
+    #driver.swipe(715, 2100, 715, 1300, 500)
+
+    TouchAction(driver).long_press(None, 715, 2100).move_to(None, 715, 1300).release().perform()
+    
+    driver.find_element(By.XPATH, gambar1).click()
+    time.sleep(3)
+
+    # Penggunaan MultiAction untuk melakukan zoom in
+    a1 = TouchAction(driver).long_press(None, 715, 1300).move_to(None, 715, 1000).release()
+    a2 = TouchAction(driver).long_press(None, 715, 1300).move_to(None, 715, 1600).release()
+
+    #MultiAction(driver).add(touch1, touch2).
+    #MultiAction(driver).add(touch1.perform(), touch2.release())
+
+    zoom = MultiAction(driver)
+    zoom.add(a1)
+    zoom.add(a2)
+    zoom.perform()
+
+    time.sleep(3)
+
+    driver.find_element(By.ID, buttonSendDirect).click()
+    
+    try:
+        WebDriverWait(driver, 60).until(EC.invisibility_of_element_located((By.ID, iconMengirim)))
+        time.sleep(2)
+        driver.close_app()
+    except TimeoutException:
+        raise Exception("gambar tidak terkirim :(")
+
+    driver.quit()
+
 
 
     
