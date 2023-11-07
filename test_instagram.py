@@ -337,7 +337,8 @@ def test_zoom_foto():
     searchbar2 = 'com.instagram.android:id/search_bar_real_field'
     akun = '//android.widget.TextView[@content-desc="Maul"]' #XPATH
     buttonCamera = 'com.instagram.android:id/row_thread_composer_button_camera' #id
-    gambar1 = '(//android.view.View[@content-desc="Photo thumbnail"])[2]' #xpath\
+    gambar1 = '(//android.view.View[@content-desc="Photo thumbnail"])[2]' #xpath
+    previewGambar = 'com.instagram.android:id/focus_view' #id
     buttonSendDirect = 'com.instagram.android:id/direct_reply_avatar_button_toggle_container' #id
     iconMengirim = 'com.instagram.android:id/action_icon' #ID
     
@@ -360,10 +361,8 @@ def test_zoom_foto():
     time.sleep(3)
 
     # Penggunaan MultiAction untuk melakukan zoom in
-    a1 = TouchAction(driver)
-    a1.long_press(None, 715, 1300).move_to(None, 715, 1000).release()
-    a2 = TouchAction(driver)
-    a2.long_press(None, 715, 1300).move_to(None, 715, 1600).release()
+    a1 = TouchAction(driver).long_press(driver.find_element(By.ID, previewGambar), 715, 1300).move_to(driver.find_element(By.ID, previewGambar), 715, 1000).release()
+    a2 = TouchAction(driver).long_press(driver.find_element(By.ID, previewGambar), 715, 1300).move_to(driver.find_element(By.ID, previewGambar), 715, 1600).release()
 
     #MultiAction(driver).add(touch1, touch2).
     #MultiAction(driver).add(touch1.perform(), touch2.release())
