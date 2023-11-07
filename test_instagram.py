@@ -15,7 +15,7 @@ desire_caps = {}
 desire_caps['appPackage'] = "com.instagram.android"
 desire_caps['appActivity'] = "com.instagram.mainactivity.InstagramMainActivity"
 desire_caps['platformName'] = "Android"
-desire_caps['udid'] = "emulator-5554"
+desire_caps['udid'] = "emulator-5554" # RR8R7027AZH, emulator-5554
 desire_caps['noReset'] = True
 desire_caps['autoGrantpermissions'] = True
 desire_caps['forceAppLaunch'] = True
@@ -352,16 +352,18 @@ def test_zoom_foto():
 
     driver.find_element(By.ID, buttonCamera).click()
     time.sleep(3)
-    #driver.swipe(715, 2100, 715, 1300, 500)
 
-    TouchAction(driver).long_press(None, 715, 2100).move_to(None, 715, 1300).release().perform()
+    driver.swipe(715, 2100, 715, 1300, 500)
+    #TouchAction(driver).long_press(None, 715, 2100).move_to(None, 715, 1300).release().perform()
     
     driver.find_element(By.XPATH, gambar1).click()
     time.sleep(3)
 
     # Penggunaan MultiAction untuk melakukan zoom in
-    a1 = TouchAction(driver).long_press(None, 715, 1300).move_to(None, 715, 1000).release()
-    a2 = TouchAction(driver).long_press(None, 715, 1300).move_to(None, 715, 1600).release()
+    a1 = TouchAction(driver)
+    a1.long_press(None, 715, 1300).move_to(None, 715, 1000).release()
+    a2 = TouchAction(driver)
+    a2.long_press(None, 715, 1300).move_to(None, 715, 1600).release()
 
     #MultiAction(driver).add(touch1, touch2).
     #MultiAction(driver).add(touch1.perform(), touch2.release())
@@ -371,7 +373,7 @@ def test_zoom_foto():
     zoom.add(a2)
     zoom.perform()
 
-    time.sleep(3)
+    time.sleep(3) 
 
     driver.find_element(By.ID, buttonSendDirect).click()
     
