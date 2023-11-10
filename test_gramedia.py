@@ -4,7 +4,7 @@ from appium.webdriver.common.multi_action import MultiAction
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from selenium.webdriver.common.action_chains import ActionChains
 import pytest
 import time
@@ -54,8 +54,8 @@ def test_login():
     except TimeoutException:
         raise Exception("tidak masuk ke halaman login")
     
-    driver.find_element(By.ID, email).send_keys("yasingammarkanari@gmail.com")
-    driver.find_element(By.ID, password).send_keys("H4l1dk4n4r1")
+    driver.find_element(By.ID, email).send_keys("yahahaha@gmail.com")
+    driver.find_element(By.ID, password).send_keys("yahahahaha")
     driver.find_element(By.ID, email).click() # button login butuh trigger dari field password atau email. jika tidak diklik maka akan gagal login
     driver.find_element(By.ID, buttonLogin).click()
 
@@ -78,6 +78,12 @@ def test_scroll():
     internationalBook = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.widget.LinearLayout/android.widget.FrameLayout/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[3]/android.widget.TextView[1]' #xpath
     lihatSemua = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.widget.LinearLayout/android.widget.FrameLayout/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[3]/android.widget.TextView[2]' #xpath
     halamanFiksiFavorit = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.LinearLayout/android.view.ViewGroup/android.widget.TextView' #xpath
+    bukuAndalan = '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.widget.LinearLayout/android.widget.FrameLayout[1]/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.widget.LinearLayout[1]/android.widget.TextView' #xpath
+    
+    try:
+        WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.XPATH, bukuAndalan)))
+    except TimeoutException:
+        pass
 
     '''while WebDriverWait(driver, 50).until(EC.invisibility_of_element_located((By.XPATH, fiksiFavorit))):
         driver.swipe(715, 1600, 715, 1100, 500)
@@ -87,14 +93,12 @@ def test_scroll():
         else:
             print("fiksi favorit ketemu")
             break'''
-    
-    while EC.invisibility_of_element_located((driver.find_element(By.XPATH, internationalBook))):
+
+    '''while EC.invisibility_of_element_located((driver.find_element(By.XPATH, internationalBook))):
         driver.swipe(715, 1600, 715, 1100, 500)
         if driver.find_element(By.XPATH, internationalBook) is not None:
             print("fiksi favorit ketemu")
-            break
-    
-    time.sleep(2)
+            break'''
 
     '''while WebDriverWait(driver, 50).until(EC.invisibility_of_element_located((By.XPATH, fiksiFavorit))):
         driver.swipe(715, 1600, 715, 1100, 500)
@@ -105,6 +109,41 @@ def test_scroll():
     '''ActionChains(driver).move_to_element(driver.find_element(By.XPATH, fiksiFavorit)).perform()'''
 
     '''driver.execute_script("argument[0].scrollIntoView();", driver.find_element(By.XPATH, fiksiFavorit))'''
+
+    '''while not driver.find_element(By.XPATH, internationalBook).is_displayed():
+        driver.swipe(715, 1600, 715, 1100, 500)
+        if driver.find_element(By.XPATH, internationalBook).is_displayed():
+            break'''
+    
+    '''while driver.find_element(By.XPATH, internationalBook) is None:
+        driver.swipe(715, 1600, 715, 1100, 500)
+        if driver.find_element(By.XPATH, internationalBook).is_displayed():
+            break'''
+
+    '''while driver.find_elements(By.XPATH, internationalBook):
+        driver.swipe(715, 1600, 715, 1100, 500)
+        if driver.find_element(By.XPATH, internationalBook).is_displayed():
+            break'''
+    
+    while True:
+        try:
+            WebDriverWait(driver, 3).until(EC.visibility_of_element_located((By.XPATH, internationalBook)))
+        except TimeoutException:
+            driver.swipe(715, 1600, 715, 1100, 500)
+            pass
+
+        if driver.find_element(By.XPATH, internationalBook) is not None:
+            break
+
+    
+    '''while True:
+        try:
+            WebDriverWait(driver, 2).until(EC.visibility_of_element_located((By.XPATH, bukuAndalan)))
+        except TimeoutException:
+            driver.swipe(715, 1600, 715, 1100, 500)
+            pass'''
+
+    time.sleep(2)
 
     driver.find_element(By.XPATH, lihatSemua).click()
 
